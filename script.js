@@ -87,7 +87,7 @@ document.addEventListener('DOMContentLoaded', function () {
             this.y += Math.sin(this.angle) * this.curve;
             this.angle += 0.04;
         }
-        draw() {
+        draw(ctx) {
             ctx.save();
             ctx.globalAlpha = 0.7;
             super.draw(ctx);
@@ -113,6 +113,13 @@ document.addEventListener('DOMContentLoaded', function () {
             super.update(deltaTime);
             this.y += this.vy * deltaTime;
             if (this.y > this.maxLength) this.vy *= -1;
+        }
+        draw(ctx) {
+            ctx.beginPath();
+            ctx.moveTo(0, 0);
+            ctx.lineTo(this.x, this.y);
+            ctx.stroke();
+            super.draw(ctx);
         }
     }
 
