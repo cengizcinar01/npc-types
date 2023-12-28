@@ -106,13 +106,13 @@ document.addEventListener('DOMContentLoaded', function () {
             this.y = 0 - this.height;
             this.image = spider;
             this.vx = 0;
-            this.vy = 1;
+            this.vy = Math.random() * 0.1 + 0.1;
             this.maxLength = Math.random() * this.game.height;
         }
         update(deltaTime) {
             super.update(deltaTime);
-            this.y += this.vy;
-            if (this.y > 200) this.vy *= -1;
+            this.y += this.vy * deltaTime;
+            if (this.y > this.maxLength) this.vy *= -1;
         }
     }
 
