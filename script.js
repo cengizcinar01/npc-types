@@ -10,9 +10,9 @@ document.addEventListener('DOMContentLoaded', function () {
             this.width = width;
             this.height = height;
             this.enemies = [];
-            this.enemyInterval = 100;
+            this.enemyInterval = 500;
             this.enemyTimer = 0;
-            this.enemyTypes = ['worm', 'ghost'];
+            this.enemyTypes = ['worm', 'ghost', 'spider'];
         }
         update(deltaTime) {
             this.enemies = this.enemies.filter((object) => !object.markedForDeletion);
@@ -33,6 +33,7 @@ document.addEventListener('DOMContentLoaded', function () {
             const randomEnemy = this.enemyTypes[Math.floor(Math.random() * this.enemyTypes.length)];
             if (randomEnemy == 'worm') this.enemies.push(new Worm(this));
             else if (randomEnemy == 'ghost') this.enemies.push(new Ghost(this));
+            else if (randomEnemy == 'spider') this.enemies.push(new Spider(this));
             /*      this.enemies.sort(function (a, b) {
                 return a.y - b.y;
             }); */
@@ -91,6 +92,27 @@ document.addEventListener('DOMContentLoaded', function () {
             ctx.globalAlpha = 0.7;
             super.draw(ctx);
             ctx.restore();
+        }
+    }
+
+    class Spider extends Enemy {
+        constructor(game) {
+            super(game);
+            this.spriteWidth = 310;
+            this.spriteHeight = 175;
+            this.width = this.spriteWidth / 2;
+            this.height = this.spriteHeight / 2;
+            this.x = Math.random() * this.game.width;
+            this.y = 0 - this.height;
+            this.image = spider;
+            this.vx = 0;
+            this.vy = 1;
+            this.maxLength = Math.random() * this.game.height;
+        }
+        update(deltaTime) {
+            super.update(deltaTime);
+            this.y += this.vy;
+            if (this.y > 200) this.vy *= -1;
         }
     }
 
